@@ -34,6 +34,13 @@ export default function Screen() {
         autoCancel: false,
         channelId: 'Bubble',
         ongoing: true,
+        onlyAlertOnce: true,
+        importance: AndroidImportance.HIGH,
+        showTimestamp: true,
+        progress: {
+          current: 0,
+          max: 10,
+        },
         actions: [
           {
             title: 'Stop',

@@ -12,11 +12,11 @@ AppRegistry.registerComponent(appName, () => App);
 
 const onTaskUpdate = async () => {
   const counter = await AsyncStorage.getItem('awesomeappTestKey');
-  // resets every 20 iterations.
+  // resets every 10 iterations.
   const correctData = counter
     ? isNaN(Number.parseInt(counter, 10))
       ? 0
-      : Number.parseInt(counter, 10) > 20
+      : Number.parseInt(counter, 10) > 10
       ? 0
       : Number.parseInt(counter, 10)
     : 0;
@@ -28,13 +28,21 @@ const onTaskUpdate = async () => {
 
 notifee.registerForegroundService(notification => {
   return new Promise(() => {
+    let count = 0;
     const setInter = setInterval(() => {
+        count = count + 1;
+        console.log('count now', count);
       const currentCount = onTaskUpdate();
       notifee.displayNotification({
         id: notification.id,
         body: notification.body,
+        title: notification.title,
         android: {
           ...notification.android,
+          progress: {
+            current: count,
+            max: 10,
+          },
         },
       });
     }, 2000);
