@@ -1,8 +1,12 @@
-import notifee, { AndroidColor, AndroidImportance } from '@notifee/react-native';
+import notifee, {
+  AndroidColor,
+  AndroidImportance,
+  EventType,
+} from '@notifee/react-native';
 import React from 'react';
-import { Button, NativeModules, View } from 'react-native';
+import {Button, NativeModules, View} from 'react-native';
 
-const {BubbleModule} = NativeModules;
+// const {BubbleModule} = NativeModules;
 
 export default function Screen() {
   //   function timeout(delay: number) {
@@ -23,12 +27,21 @@ export default function Screen() {
     // BubbleModule.showBubble();
 
     notifee.displayNotification({
-      title: 'Foreground service',
-      body: 'This notification will exist for the lifetime of the service runner',
+      title: 'Foreground Service Notification',
+      body: 'Press the Quick Action to stop the service',
       android: {
+        asForegroundService: true,
+        autoCancel: false,
         channelId: 'Bubble',
-        color: AndroidColor.RED,
-        colorized: true,
+        ongoing: true,
+        actions: [
+          {
+            title: 'Stop',
+            pressAction: {
+              id: 'stop',
+            },
+          },
+        ],
       },
     });
   }

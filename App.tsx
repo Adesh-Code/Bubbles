@@ -10,6 +10,7 @@ import {SafeAreaView, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PiPExample from './src/Event';
+import notifee from '@notifee/react-native';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
