@@ -1,13 +1,13 @@
-import notifee, { AndroidImportance } from '@notifee/react-native';
+import notifee, { AndroidColor, AndroidImportance } from '@notifee/react-native';
 import React from 'react';
 import { Button, NativeModules, View } from 'react-native';
 
 const {BubbleModule} = NativeModules;
 
 export default function Screen() {
-  function timeout(delay: number) {
-    return new Promise( res => setTimeout(res, delay) );
-}
+  //   function timeout(delay: number) {
+  //     return new Promise( res => setTimeout(res, delay) );
+  // }
   async function onDisplayNotification() {
     // Request permissions (required for iOS)
     await notifee.requestPermission();
@@ -20,21 +20,17 @@ export default function Screen() {
     // });
 
     // await timeout(1000);
-    BubbleModule.showBubble();
+    // BubbleModule.showBubble();
 
-    // Display a notification
-    // await notifee.displayNotification({
-    //   title: 'Notification Title',
-    //   body: 'Main body content of the notification',
-    //   android: {
-    //     channelId: 'Bubble',
-    //     // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-    //     // pressAction is needed if you want the notification to open the app when pressed
-    //     pressAction: {
-    //       id: 'default',
-    //     },
-    //   },
-    // });
+    notifee.displayNotification({
+      title: 'Foreground service',
+      body: 'This notification will exist for the lifetime of the service runner',
+      android: {
+        channelId: 'Bubble',
+        color: AndroidColor.RED,
+        colorized: true,
+      },
+    });
   }
 
   return (

@@ -1,7 +1,5 @@
 import {
   ActivityIndicator,
-  Button,
-  DeviceEventEmitter,
   NativeModules,
   Text,
   TouchableOpacity,
@@ -90,7 +88,6 @@ const PiPExample = () => {
     //   subscriptionPress.remove();
     //   subscriptionRemove.remove();
     // };
-
 
   }, []);
 
