@@ -22,7 +22,7 @@ const onTaskUpdate = async () => {
     : 0;
   await AsyncStorage.setItem('awesomeappTestKey', String(correctData + 1));
   // Your logic for handling task updates
-  console.log('current Count2', correctData);
+  console.log('current Count3', correctData);
   return correctData;
 };
 
