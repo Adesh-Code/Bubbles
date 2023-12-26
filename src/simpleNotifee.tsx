@@ -1,7 +1,5 @@
 import notifee, {
-  AndroidColor,
   AndroidImportance,
-  EventType,
 } from '@notifee/react-native';
 import React from 'react';
 import {Button, NativeModules, View} from 'react-native';

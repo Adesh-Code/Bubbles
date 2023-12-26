@@ -17,37 +17,47 @@ export const BackgroundTask = async () => {
         // if there is data to be send
         if (imageData?.hasOwnProperty('img1')) {
             // checking wheather current image is published or not, if not then
-            if (!imageData.img1?.startsWith(constant.IMAGE_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.img1 !== null && !imageData.img1?.startsWith(constant.IMAGE_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Image to Server.
+                await asyncService.saveImageData(1, constant.IMAGE_SERVER_HOST);
                 return false;
             }
-            if (!imageData.img2?.startsWith(constant.IMAGE_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.img2 !== null && !imageData.img2?.startsWith(constant.IMAGE_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Image to Server.
+                await asyncService.saveImageData(2, constant.IMAGE_SERVER_HOST);
                 return false;
             }
-            if (!imageData.img3?.startsWith(constant.IMAGE_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.img3 !== null && !imageData.img3?.startsWith(constant.IMAGE_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Image to Server.
+                await asyncService.saveImageData(3, constant.IMAGE_SERVER_HOST);
                 return false;
             }
-            if (!imageData.img4?.startsWith(constant.IMAGE_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.img4 !== null && !imageData.img4?.startsWith(constant.IMAGE_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Image to Server.
+                await asyncService.saveImageData(4, constant.IMAGE_SERVER_HOST);
                 return false;
             }
-            if (!imageData.videoUrl?.startsWith(constant.VIDEO_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.videoUrl !== null && !imageData.videoUrl?.startsWith(constant.VIDEO_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Video to Server.
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                console.log('Video uploaded 1');
+                await asyncService.saveVideoData(1, constant.VIDEO_SERVER_HOST);
                 return false;
             }
-            if (!imageData.videoUrl1?.startsWith(constant.VIDEO_SERVER_HOST)) {
-                await asyncService.setInspector(false);
+            if ( imageData.videoUrl1 !== null && !imageData.videoUrl1?.startsWith(constant.VIDEO_SERVER_HOST)) {
+                await asyncService.setInspector('false');
                 // TODO: Post Video to Server.
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                console.log('Video uploaded 2');
+                await asyncService.saveVideoData(2, constant.VIDEO_SERVER_HOST);
                 return false;
             }
-            await asyncService.setInspector(true);
+            await asyncService.setInspector('true');
         } else {
             console.log("There is no data for Images in Async");
             return false;
@@ -58,19 +68,3 @@ export const BackgroundTask = async () => {
     }
     return true;
 }
-
-const onTaskUpdate = async () => {
-    const counter = await AsyncStorage.getItem('awesomeappTestKey');
-    // resets every 10 iterations.
-    const correctData = counter
-      ? isNaN(Number.parseInt(counter, 10))
-        ? 0
-        : Number.parseInt(counter, 10) > 10
-        ? 0
-        : Number.parseInt(counter, 10)
-      : 0;
-    await AsyncStorage.setItem('awesomeappTestKey', String(correctData + 1));
-    // Your logic for handling task updates
-    console.log('current Count6', correctData);
-    return correctData;
-  };

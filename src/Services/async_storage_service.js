@@ -18,7 +18,6 @@ export const initializeAsync = async () => {
 
     const serviceDummyData = {
         id : null,
-        didComplete: 'true',
     }
 
     if (await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR) == null) {
@@ -93,7 +92,7 @@ export const getAsyncData = async () => {
     const keys = await AsyncStorage.getAllKeys();
     const data = await AsyncStorage.multiGet(keys);
     const result = data.map(([key, value]) => ({ key, value: JSON.parse(value) }));
-    console.log('\nAll data from Async:');
+    console.log('All data from Async:');
     result.forEach(({ key, value }) => {
     console.log(`${key} ===> ${JSON.stringify(value)} \n`);
     });                                 
@@ -107,7 +106,7 @@ export const flushAsync = async () => {
 
 export const setInspector = async (val) => {
     const currentInspectorData = await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR);
-    await AsyncStorage.setItem(constant.ASYNC_KEY_INSPECTOR, val);
+    await AsyncStorage.setItem(constant.ASYNC_KEY_INSPECTOR, JSON.stringify(val));
 }
 
 export const saveBackgroundServiceData = async (id) => {
@@ -115,7 +114,7 @@ export const saveBackgroundServiceData = async (id) => {
     const data = JSON.parse(backgroundService);
     console.log('data for background', data);
     if (data.id == null) {
-        await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, id);
+        await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, JSON.stringify(id));
     }
     else {
         console.log('Background Service is Running please remove it or stop it before creating new one');
@@ -125,5 +124,7 @@ export const saveBackgroundServiceData = async (id) => {
 export const removeBackgroundServiceData = async () => {
     const backgroundService =  await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE);
     console.log('data for background remove', backgroundService);
-    await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, id);
+    await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, JSON.stringify({
+        id: null,
+    }));
 }

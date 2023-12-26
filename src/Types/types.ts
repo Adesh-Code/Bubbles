@@ -1,9 +1,8 @@
 export interface ServiceData {
     id: String | null,
-    didComplete: boolean,
 }
 
-export interface ImageData {
+export interface SiteData {
     img1: String | null,
     img2: String | null,
     img3: String | null,
@@ -14,5 +13,6 @@ export interface ImageData {
     reportingTime: String,
     problemWithSite: String,
     lat: number,
-    long: number
+    long: number,
+    isSubmitted: boolean,
 }

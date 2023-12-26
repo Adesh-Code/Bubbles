@@ -5,3 +5,5 @@ export const ASYNC_KEY_BACKGROUND_SERVICE = 'Background_Service@Async'
 
 export const IMAGE_SERVER_HOST = 'https://';
 export const VIDEO_SERVER_HOST = 'https://';
+
+export const BACKGROUND_SERVICE_UNIQUE_ID = 'hello';

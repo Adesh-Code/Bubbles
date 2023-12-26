@@ -7,7 +7,7 @@ import {
 import React, {useEffect} from 'react';
 // import floatingBubble from '@fabithub/react-native-floating-bubble';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import Screen from './notifee';
+import Screen from './simpleNotifee';
 
 const {PipModule} = NativeModules;
 
@@ -95,7 +95,7 @@ const PiPExample = () => {
     <TouchableOpacity onPress={enterPiPMode}>
       <Text>Enter Picture-in-Picture Mode</Text>
       <ActivityIndicator animating />
-      <Screen />
+      {/* <Screen /> */}
       {/* <Button title="show" onPress={() => showButtonToUser(10, 10)} />
       <Button title="hide" onPress={hideButtonFromUser} />
       <Button title="async counter" onPress={getAsync} />
