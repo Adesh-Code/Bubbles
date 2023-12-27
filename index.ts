@@ -6,7 +6,7 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import notifee from '@notifee/react-native';
-import { BackgroundTask } from './src/Services/background_service';
+import { InspectorService } from './src/Services/background_service';
 import * as asyncService from './src/Services/async_storage_service';
 
 AppRegistry.registerComponent(appName, () => App);
@@ -16,7 +16,7 @@ notifee.requestPermission();
 notifee.registerForegroundService(notification => {
   return new Promise(async () => {
     const setInter = setInterval(async () => {
-      const didTaskComplete = await BackgroundTask();
+      const didTaskComplete = await InspectorService();
 
       if (didTaskComplete) {
         // wait until 5 seconds else stop the notification task

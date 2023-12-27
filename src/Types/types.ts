@@ -1,18 +1,23 @@
 export interface ServiceData {
-    id: String | null,
+    id: string | null,
 }
 
 export interface SiteData {
-    img1: String | null,
-    img2: String | null,
-    img3: String | null,
-    img4: String | null,
-    videoUrl: String | null,
-    videoUrl1: String | null,
-    vendorRemark: String,
-    reportingTime: String,
-    problemWithSite: String,
+    siteId: string;
+    img1: string | null,
+    img2: string | null,
+    img3: string | null,
+    img4: string | null,
+    videoUrl: string | null,
+    videoUrl1: string | null,
+    vendorRemark: string,
+    reportingTime: string,
+    problemWithSite: string,
     lat: number,
     long: number,
     isSubmitted: boolean,
+}
+
+export interface InspectorData {
+    canProceed: boolean;
 }
