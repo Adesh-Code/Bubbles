@@ -12,8 +12,8 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
-      <activity
-            android:name=".BubbleModule"
+      <!-- <activity
+            android:name="com.awesomeproject.BubbleModule"
             android:allowEmbedded="true"
             android:documentLaunchMode="always"
             android:exported="true"
@@ -25,7 +25,7 @@
                     android:host="android.awesomeproject.com"
                     android:scheme="https" />
             </intent-filter>
-        </activity>
+        </activity> -->
       <activity
         android:supportsPictureInPicture="true"
         android:name=".MainActivity"

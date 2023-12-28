@@ -10,13 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@fabithub/react-native-floating-bubble": "^1.0.1",
+"@fabithub/react-native-floating-bubble": "^1.0.1",
     "@notifee/react-native": "^7.8.2",
     "@react-native-async-storage/async-storage": "^1.19.8",
     "react": "18.2.0",
-    "react-native": "0.72.7",
-    "react-native-camera-kit": "^13.0.0",
-    "react-native-image-picker": "^7.1.0"
+    "react-native": "0.72.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

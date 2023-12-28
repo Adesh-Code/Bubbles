@@ -8,6 +8,7 @@ import * as constant from './Constants/constant';
 
 const Frontend = () => {
     const [siteId, setSiteId] = useState('1');
+    const [data, setData] = useState<{ key: string; value: any; }[]>();
     const testURI = 'ftp://test';
 
     const startService = async () => {
@@ -43,6 +44,11 @@ const Frontend = () => {
         await startService();
     }
 
+    const getData = async () => {
+        const newData = await asyncService.getAsyncData().then(val => val);
+        setData(newData);
+    }
+
     useEffect(() => {
         // start inspector Service at start
         startService();
@@ -52,7 +58,7 @@ const Frontend = () => {
         <View>
             <Text style={{textAlign: 'center'}}>Async Storage Stuffs</Text>
             <Button onPress={asyncService.initializeAsync} title="Initialize" />
-            <Button onPress={asyncService.getAsyncData} title="Get Data" />
+            <Button onPress={getData} title="Get Data" />
             <Button onPress={asyncService.removeBackgroundServiceData} title="Remove Background Service" />
             
             {/* <Button onPress={async () => {
@@ -114,7 +120,7 @@ const Frontend = () => {
             <Text style={{textAlign: 'center'}}>current SiteId: {siteId}</Text>
             <View style={{height: 30}} />
             <Button onPress={submitSite} title="Submit" />
-            
+            <Text style={{fontSize: 10}} >{JSON.stringify(data, null, 0)}</Text>
         </View>
     )
 }
