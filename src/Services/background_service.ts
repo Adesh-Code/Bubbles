@@ -30,8 +30,8 @@ export const InspectorService = async () => {
               if (typeof currentContent === 'string' && !currentContent.startsWith(constant.IMAGE_SERVER_HOST)) {
                 const returnUri = await UploadContentToS3(siteId, contentKey);
                 await asyncService.updateSiteDataByKey(siteId, contentKey, returnUri);
-                console.log('uploaded', contentKey);
                 await asyncService.setInspector(true);
+                console.log('uploaded', contentKey);
                 return false;
               }
             }
@@ -40,8 +40,8 @@ export const InspectorService = async () => {
             if (siteDataElement.isSubmitted === true) {
               console.log('Site already submitted. Skipping content upload. ', siteId);
               await UploadSiteData(siteDataElement.siteId);
-              await asyncService.removeSiteData(siteDataElement.siteId);
               await asyncService.setInspector(true);
+              await asyncService.removeSiteData(siteDataElement.siteId);
               return false; // or handle accordingly
             }
           }
@@ -55,6 +55,6 @@ export const InspectorService = async () => {
         console.log("Waiting for Inspector ....");
         return false;
       }
-      
+      await asyncService.removeBackgroundServiceData();
     return true;
 }

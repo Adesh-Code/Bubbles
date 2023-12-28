@@ -21,7 +21,6 @@ notifee.registerForegroundService(notification => {
       if (didTaskComplete) {
         // wait until 5 seconds else stop the notification task
         setTimeout(() => {
-          asyncService.removeBackgroundServiceData();
           clearInterval(setInter);
           notifee.stopForegroundService();
           notifee.cancelAllNotifications();
@@ -40,3 +39,4 @@ notifee.registerForegroundService(notification => {
   });
 });
 
+notifee.onBackgroundEvent(async (event) => {});

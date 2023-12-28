@@ -103,7 +103,7 @@ export const updateSiteDataByKey = async (siteId: string, contentKey: string, va
             [contentKey]: value,
         };}
         else {
-            const newElement = {...siteDummyData, siteId: siteId}
+            const newElement = {...siteDummyData, siteId: siteId, [contentKey]: value}
               allSiteData.push(newElement);
         }
         // Save the updated array back to AsyncStorage

@@ -13,7 +13,6 @@ const Frontend = () => {
     const startService = async () => {
         // This contains current Service Details which can be used to abort this functionality outside of this service.
         const serviceData : ServiceData | null = await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE).then(data => JSON.parse(data ?? 'null'));
-
         
         if (serviceData == null || serviceData.id == null) {
             await notifee.displayNotification({
