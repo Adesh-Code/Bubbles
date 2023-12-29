@@ -14,26 +14,32 @@ const Frontend = () => {
     const startService = async () => {
         // This contains current Service Details which can be used to abort this functionality outside of this service.
         const serviceData : ServiceData | null = await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE).then(data => JSON.parse(data ?? 'null'));
-        
-        if (serviceData == null || serviceData.id == null) {
-            await notifee.displayNotification({
-                id: constant.BACKGROUND_SERVICE_UNIQUE_ID,
-                title: 'Data is Uploading Please Wait...',
-                body: 'Please keep internet connectivity active!',
-                android: {
-                  asForegroundService: true,
-                  autoCancel: false,
-                  channelId: 'Bubble',
-                  ongoing: true,
-                  onlyAlertOnce: true,
-                  importance: AndroidImportance.HIGH,
-                  showTimestamp: true,
-                  progress: {
-                    indeterminate: true
-                  },
-                },
-              });
-            await asyncService.saveBackgroundServiceData(constant.BACKGROUND_SERVICE_UNIQUE_ID);
+        const inspectorData = await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR).then(data => data ? JSON.parse(data) : null);
+
+        if (serviceData == null || serviceData.id == null ) {
+            if (inspectorData !== null && inspectorData.canProceed == true) {
+                await notifee.displayNotification({
+                    id: constant.BACKGROUND_SERVICE_UNIQUE_ID,
+                    title: 'Data is Uploading Please Wait...',
+                    body: 'Please keep internet connectivity active!',
+                    android: {
+                      asForegroundService: true,
+                      autoCancel: false,
+                      channelId: 'Bubble',
+                      ongoing: true,
+                      onlyAlertOnce: true,
+                      importance: AndroidImportance.HIGH,
+                      showTimestamp: true,
+                      progress: {
+                        indeterminate: true
+                      },
+                    },
+                  });
+                await asyncService.saveBackgroundServiceData(constant.BACKGROUND_SERVICE_UNIQUE_ID);
+            } else {
+                console.log('Inspector is responding! please wait....');
+                await asyncService.setInspector(true);
+            }
         } else {
             console.log('There is already one service runnning please wait....');
         }

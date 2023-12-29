@@ -12,7 +12,7 @@ export const InspectorService = async () => {
     // This contains current Service Details which can be used to abort this functionality outside of this service.
     const serviceData : ServiceData | null = await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE).then(data => data ? JSON.parse(data) : null);
     // This is a flag used to determine whether current service is completed (true) or not (false).
-    const inspectorData= await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR).then(data => data ? JSON.parse(data) : null);
+    const inspectorData = await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR).then(data => data ? JSON.parse(data) : null);
 
     if (inspectorData !== null && inspectorData.canProceed === true) {
         if (siteData !== null) {
