@@ -1,5 +1,6 @@
 export interface ServiceData {
     id: string | null,
+    timeStarted: Date | null,
 }
 
 export interface SiteData {
@@ -16,6 +17,7 @@ export interface SiteData {
     lat: number,
     long: number,
     isSubmitted: boolean,
+    timeUpdated: Date | null,
 }
 
 export interface InspectorData {

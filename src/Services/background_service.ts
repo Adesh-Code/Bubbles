@@ -14,8 +14,12 @@ export const InspectorService = async () => {
     // This is a flag used to determine whether current service is completed (true) or not (false).
     const inspectorData = await AsyncStorage.getItem(constant.ASYNC_KEY_INSPECTOR).then(data => data ? JSON.parse(data) : null);
 
+    const currentTime = new Date();
+    const twentyFourHoursAgo = new Date(currentTime);
+    twentyFourHoursAgo.setHours(currentTime.getHours() - 24);
+
     if (inspectorData !== null && inspectorData.canProceed === true) {
-        if (siteData !== null) {
+        if (siteData !== null && siteData.length > 0) {
           await asyncService.setInspector(false);
       
           const contentKeys = ['img1', 'img2', 'img3', 'img4', 'videoUrl', 'videoUrl1'];
@@ -44,6 +48,12 @@ export const InspectorService = async () => {
               await asyncService.removeSiteData(siteDataElement.siteId);
               return false; // or handle accordingly
             }
+
+
+            if (siteDataElement !== null && siteDataElement.timeUpdated !== null && siteDataElement.timeUpdated < twentyFourHoursAgo) {
+              await asyncService.removeSiteData(siteDataElement.siteId);
+              console.log('Site data was seating in asyncStorage for 24 hrs and more...')
+            }   
           }
       
           await asyncService.setInspector(true);

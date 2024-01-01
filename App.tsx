@@ -22,7 +22,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <PiPExample />
+      {/* <PiPExample /> */}
       <NewFrontend />
     </SafeAreaView>
   );

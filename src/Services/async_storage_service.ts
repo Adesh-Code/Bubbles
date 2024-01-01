@@ -1,55 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as constant from "../Constants/constant";
-import { InspectorData, SiteData } from "../Types/types";
+import { InspectorData, ServiceData, SiteData } from "../Types/types";
 
 export const initializeAsync = async () => {
-    const siteDummyData: SiteData[] = [
-        {
-            "siteId": '1',
-            "img1": null,
-            "img2": null,
-            "img3": null,
-            "img4": null,
-            "videoUrl": null,
-            "videoUrl1": null,
-            "vendorRemark": "",
-            "reportingTime": '',
-            "problemWithSite": '',
-            "lat": 0,
-            "long": 0,
-            "isSubmitted": false,
-        },
-        {
-            "siteId": '2',
-            "img1": null,
-            "img2": null,
-            "img3": null,
-            "img4": null,
-            "videoUrl": null,
-            "videoUrl1": null,
-            "vendorRemark": "",
-            "reportingTime": '',
-            "problemWithSite": '',
-            "lat": 0,
-            "long": 0,
-            "isSubmitted": false,
-        },
-        {
-            "siteId": '3',
-            "img1": null,
-            "img2": null,
-            "img3": null,
-            "img4": null,
-            "videoUrl": null,
-            "videoUrl1": null,
-            "vendorRemark": "",
-            "reportingTime": '',
-            "problemWithSite": '',
-            "lat": 0,
-            "long": 0,
-            "isSubmitted": false,
-        }
-    ]
+    
 
     const serviceDummyData = {
         id : null,
@@ -63,10 +17,6 @@ export const initializeAsync = async () => {
         await AsyncStorage.setItem(constant.ASYNC_KEY_INSPECTOR, JSON.stringify(inspectorDummyData));
     }
 
-    if (await AsyncStorage.getItem(constant.ASYNC_KEY_SITE_DATA) == null) {
-        await AsyncStorage.setItem(constant.ASYNC_KEY_SITE_DATA, JSON.stringify(siteDummyData));
-    }
-
     if (await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE) == null) {
         await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, JSON.stringify(serviceDummyData));
     }
@@ -74,21 +24,7 @@ export const initializeAsync = async () => {
 }
 
 export const updateSiteDataByKey = async (siteId: string, contentKey: string, value: any) => {
-    const siteDummyData : SiteData = {
-            "siteId": '3',
-            "img1": null,
-            "img2": null,
-            "img3": null,
-            "img4": null,
-            "videoUrl": null,
-            "videoUrl1": null,
-            "vendorRemark": "",
-            "reportingTime": '',
-            "problemWithSite": '',
-            "lat": 0,
-            "long": 1,
-            "isSubmitted": false,
-        }
+    const siteDummyData : SiteData = constant.dummyData[0];
     
         const tempData = await AsyncStorage.getItem(constant.ASYNC_KEY_SITE_DATA);
         const allSiteData: SiteData[] = JSON.parse(tempData ?? "[]");
@@ -103,7 +39,7 @@ export const updateSiteDataByKey = async (siteId: string, contentKey: string, va
             [contentKey]: value,
         };}
         else {
-            const newElement = {...siteDummyData, siteId: siteId, [contentKey]: value}
+            const newElement = {...siteDummyData, siteId: siteId, [contentKey]: value, lastUpdated: new Date()}
               allSiteData.push(newElement);
         }
         // Save the updated array back to AsyncStorage
@@ -146,7 +82,7 @@ export const setInspector = async (val: boolean) => {
 export const saveBackgroundServiceData = async (id: string) => {
     const backgroundService =  await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE);
     const data = JSON.parse(backgroundService ?? 'null');
-    const dataJson = {id}
+    const dataJson = {id, timeStarted: new Date() }
     if (data === null || data.id == null) {
         await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, JSON.stringify(dataJson));
     }
@@ -160,6 +96,7 @@ export const removeBackgroundServiceData = async () => {
     console.log('data for background remove', backgroundService);
     await AsyncStorage.setItem(constant.ASYNC_KEY_BACKGROUND_SERVICE, JSON.stringify({
         id: null,
+        timeStarted: null
     }));
 }
 
