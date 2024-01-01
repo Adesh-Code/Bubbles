@@ -11,6 +11,7 @@ import {SafeAreaView, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PiPExample from './src/pip';
 import Frontend from './src/frontend';
+import NewFrontend from './src/newfrontend';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,7 +23,7 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={backgroundStyle}>
       <PiPExample />
-      <Frontend />
+      <NewFrontend />
     </SafeAreaView>
   );
 }

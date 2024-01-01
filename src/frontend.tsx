@@ -5,6 +5,7 @@ import notifee, { AndroidImportance } from '@notifee/react-native';
 import { ServiceData } from "./Types/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as constant from './Constants/constant';   
+import CameraScreen from "./camera";
 
 const Frontend = () => {
     const [siteId, setSiteId] = useState('1');
