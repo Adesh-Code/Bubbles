@@ -49,7 +49,6 @@ export const InspectorService = async () => {
               return false; // or handle accordingly
             }
 
-
             if (siteDataElement !== null && siteDataElement.timeUpdated !== null && siteDataElement.timeUpdated < twentyFourHoursAgo) {
               await asyncService.removeSiteData(siteDataElement.siteId);
               console.log('Site data was seating in asyncStorage for 24 hrs and more...')

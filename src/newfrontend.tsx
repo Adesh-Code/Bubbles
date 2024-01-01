@@ -28,13 +28,17 @@ const NewFrontend = () => {
            
             // Update the state with the modified siteData
             setSiteData([...siteData]);
-            await asyncService.updateSiteDataByKey(siteId, contentKey, result.path);
-            await startService();
+            await saveDataToAsync(siteId, contentKey, result.path);
           }
         } catch (error) {
           console.log(error, 'when capturing camera');
         }
       };
+
+      const saveDataToAsync = async (siteId: string, contentKey: string, val: any) => {
+        await asyncService.updateSiteDataByKey(siteId, contentKey, val);
+        // await startService();
+      }
 
       const startService = async () => {
         // This contains current Service Details which can be used to abort this functionality outside of this service.
@@ -89,54 +93,71 @@ const NewFrontend = () => {
             // start inspector Service at start
             startService();
 
+            // this is for making sure the service stops after ten minutes after opening the app becoz of  unexpected behaviour
             setTimeout(async () => {
                 const serviceData : ServiceData | null = await AsyncStorage.getItem(constant.ASYNC_KEY_BACKGROUND_SERVICE).then(data => JSON.parse(data ?? 'null'));
                 const currentTime = new Date();
                 const twentyFourHoursAgo = new Date(currentTime);
-                twentyFourHoursAgo.setHours(currentTime.getHours() - 24);
+                twentyFourHoursAgo.setMinutes(currentTime.getHours() - 2);
 
                 if (serviceData !== null && serviceData.timeStarted !== null && serviceData.timeStarted < twentyFourHoursAgo) {
                     await asyncService.removeBackgroundServiceData();
                 }   
-            }, 100000);
+            }, 1000);
 
-        }, []);
+        }, [siteData]);
 
     return (
         <SafeAreaView style={{marginTop: 50}}>
             <ScrollView>
             <View style={{ marginHorizontal: 10 }}>
             {
-                siteData?.map((siteDataElement) => {
-                const contentKeys: Array<keyof typeof siteDataElement> = ['img1', 'img2', 'img3', 'img4', 'videoUrl', 'videoUrl1'];
+        siteData?.map((siteDataElement) => {
+          const contentKeys: Array<keyof typeof siteDataElement> = ['img1', 'img2', 'img3', 'img4', 'videoUrl', 'videoUrl1'];
 
-                return (
-                    <View key={siteDataElement.siteId} style={{ flexDirection: 'row', marginBottom: 50, justifyContent: 'space-evenly', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: 'white', alignSelf:'center' }}>Site : {siteDataElement.siteId}</Text>
-                    {
-                        contentKeys.map((contentKey) => {
+          return (
+            <View key={siteDataElement.siteId} 
+            style={{
+                marginBottom: 20,
+                paddingTop: 20,
+                paddingBottom: 10,
+                borderWidth: 1,
+                borderColor: 'rgba(255, 255, 255, 0.5)', // Slightly bright border color
+                borderRadius: 10,
+                backgroundColor: 'rgba(255, 255, 255, 0.1)', // Slightly bright background color
+                overflow: 'hidden',
+              }}>
+              <Text style={{ fontSize: 20, color: 'white', alignSelf: 'center' }}>Site : {siteDataElement.siteId}</Text>
 
-                        const contentType = contentKey.startsWith('img')
-                            ? 'photo'
-                            : 'video';
+              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                {
+                  contentKeys.map((contentKey) => {
+                    const contentType = contentKey.startsWith('img') ? 'photo' : 'video';
+                    const icon = contentType === 'photo' ? 'insert-photo' : 'video-file';
 
-                            let icon = contentType === 'photo' ? 'insert-photo' : 'video-file';
+                    return (
+                      <TouchableOpacity
+                        style={contentType === 'video' ? { paddingLeft: 20 } : { paddingLeft: 10 }}
+                        key={contentKey}
+                        onPress={() => handleCamera(siteDataElement.siteId, contentKey, contentType)}
+                      >
+                        <Icon name={icon} size={40} color={'grey'} />
+                      </TouchableOpacity>
+                    );
+                  })
+                }
+              </View>
 
-                        return (
-                            <TouchableOpacity
-                                style={contentType === 'video' ? {paddingLeft: 20}: {paddingLeft: 10}}
-                                key={contentKey}
-                                onPress={() => handleCamera(siteDataElement.siteId, contentKey, contentType)}
-                            >
-                                <Icon name={icon} size={40} color={'grey'} />
-                            </TouchableOpacity>
-                        );
-                        })
-                    }
-                    </View>
-                );
-                })
-            }
+              <TouchableOpacity
+                style={{ alignSelf: 'center', marginTop: 20, padding: 10, backgroundColor: 'blue' }}
+                onPress={async() => await saveDataToAsync(siteDataElement.siteId, 'isSubmitted', true)} // Adjust the function and parameters as needed
+              >
+                <Text style={{ color: 'white' }}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })
+      }
             </View>
             <Button onPress={getData} title="Get Data"/>
             <Button onPress={async() => {
